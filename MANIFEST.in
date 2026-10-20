@@ -1,0 +1,6 @@
+exclude configs/model_registry.local.toml
+prune .workbuddy
+recursive-exclude data *
+recursive-exclude results *
+recursive-exclude audit *
+recursive-exclude * __pycache__ *.py[cod] .DS_Store

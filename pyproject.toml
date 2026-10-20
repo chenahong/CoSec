@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cosec-benchmark"
+version = "0.1.0"
+description = "Executable privacy and authorization benchmark for persistent LLM agents"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "openai>=2.54.0,<4",
+]
+
+[project.optional-dependencies]
+experiment = [
+    "harbor>=0.20.0,<0.22",
+]
+mcp = [
+    "mcp>=1.0.0,<3",
+]
+dev = [
+    "harbor>=0.20.0,<0.22",
+    "mcp>=1.0.0,<3",
+    "pytest>=8,<10",
+    "ruff>=0.4,<1",
+]
+
+[project.scripts]
+cosec = "dynacomsec.experiment.runner:main"
+
+[tool.setuptools]
+packages = [
+    "dynacomsec",
+    "dynacomsec.agents",
+    "dynacomsec.community",
+    "dynacomsec.core",
+    "dynacomsec.evaluation",
+    "dynacomsec.experiment",
+    "dynacomsec.experiment.agents",
+    "dynacomsec.harness",
+    "dynacomsec.runtime",
+    "dynacomsec.scripts",
+]
+package-dir = {dynacomsec = "."}
+include-package-data = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

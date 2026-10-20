@@ -1,0 +1,77 @@
+schema: dynacomsec/agent-matrix/v2
+description: >
+  Harness inventory for the paper configurations. Every active entry uses the
+  same --agent and --model runner contract. Adaptive scenarios use a separate
+  OpenAI-compatible attacker model configured with --attacker-model or
+  DYNACOMSEC_ATTACKER_MODEL.
+
+session_manager:
+  default_mode: replay
+  modes:
+    replay: framework_replays_current_community_transcript
+    native: adapter_binds_session_id_to_agent_create_or_resume
+  isolation_key: scenario_id_agent_id_community_id
+  shared_scope:
+    - trial_workspace
+    - agent_home
+    - tools
+  output: /logs/agent/sessions.json
+
+agents:
+  claude-code:
+    status: implemented_but_not_reported
+    native_session_adapter: claude-session-uuid
+    command_env: DYNACOMSEC_CLAUDE_CODE_COMMAND
+    models: []
+
+  codex:
+    status: implemented_replay_and_native_harness
+    native_session_adapter: codex-conversation-uuid
+    command_env: DYNACOMSEC_CODEX_COMMAND
+    models:
+      - openai/gpt-5.6-sol
+
+  openclaw:
+    status: implemented_replay_and_native_local_harness
+    native_session_adapter: openclaw-session-key
+    command_env: DYNACOMSEC_OPENCLAW_COMMAND
+    models:
+      - google/gemini-3.5-flash
+      - google/gemini-3.1-pro-preview
+      - deepseek/deepseek-flash
+      - zhipu/glm-5.2
+      - qwen/qwen3.8-max
+      - minimax/MiniMax-M2.5
+
+  hermes:
+    status: implemented_native_harness
+    native_session_adapter: hermes-session-id
+    command_env: DYNACOMSEC_HERMES_COMMAND
+    models:
+      - google/gemini-3.5-flash
+      - google/gemini-3.1-pro-preview
+      - deepseek/deepseek-flash
+      - openai/gpt-5.6-sol
+      - zhipu/glm-5.2
+      - qwen/qwen3.8-max
+
+  generic-cli:
+    status: implemented
+    native_session_adapter: null
+    command_env: DYNACOMSEC_AGENT_COMMAND
+    models: []
+
+command_template_placeholders:
+  - instruction
+  - instruction_file
+  - model
+  - session_id
+  - community_id
+  - agent_id
+
+adaptive_attacker:
+  interface: openai_compatible_chat_completions
+  env:
+    - DYNACOMSEC_ATTACKER_API_KEY
+    - DYNACOMSEC_ATTACKER_BASE_URL
+    - DYNACOMSEC_ATTACKER_MODEL

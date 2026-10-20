@@ -1,0 +1,235 @@
+# Illustrative official-provider profiles corresponding to the 13 harness and
+# model combinations reported in the paper. They document names and endpoints,
+# but are not a record of every endpoint used for the historical runs.
+# Export the referenced API keys in the shell. Do not store credentials here.
+# Endpoint and model identifiers were checked against provider documentation
+# on 2026-09-26. Request limits below retain the paper's experiment settings.
+
+# OpenClaw
+
+[profiles."openclaw.gemini_3_5_flash"]
+agent = "openclaw"
+image = "dynacomsec:openclaw"
+model = "google/gemini-3.5-flash"
+session_mode = "native"
+unset = ["OPENAI_API_KEY", "OPENAI_BASE_URL"]
+
+[profiles."openclaw.gemini_3_5_flash".env]
+GOOGLE_API_KEY = "${GEMINI_API_KEY}"
+GEMINI_API_KEY = "${GEMINI_API_KEY}"
+
+[profiles."openclaw.gemini_3_5_flash".openclaw.models]
+default = "google/gemini-3.5-flash"
+
+[profiles."openclaw.gemini_3_5_flash".openclaw.models.providers.google]
+apiKey = "${GEMINI_API_KEY}"
+api = "google-generative-ai"
+
+[[profiles."openclaw.gemini_3_5_flash".openclaw.models.providers.google.models]]
+id = "gemini-3.5-flash"
+name = "Gemini 3.5 Flash"
+api = "google-generative-ai"
+reasoning = true
+input = ["text"]
+contextWindow = 1048576
+maxTokens = 8192
+
+[profiles."openclaw.gemini_3_1_pro"]
+extends = "openclaw.gemini_3_5_flash"
+model = "google/gemini-3.1-pro-preview"
+
+[profiles."openclaw.gemini_3_1_pro".openclaw.models]
+default = "google/gemini-3.1-pro-preview"
+
+[[profiles."openclaw.gemini_3_1_pro".openclaw.models.providers.google.models]]
+id = "gemini-3.1-pro-preview"
+name = "Gemini 3.1 Pro"
+api = "google-generative-ai"
+reasoning = true
+input = ["text"]
+contextWindow = 1048576
+maxTokens = 8192
+
+[profiles."openclaw.deepseek_4_1_flash"]
+agent = "openclaw"
+image = "dynacomsec:openclaw"
+model = "deepseek/deepseek-flash"
+session_mode = "native"
+
+[profiles."openclaw.deepseek_4_1_flash".env]
+OPENAI_API_KEY = "${DEEPSEEK_API_KEY}"
+OPENAI_BASE_URL = "https://api.deepseek.com"
+
+[profiles."openclaw.deepseek_4_1_flash".openclaw.models]
+default = "deepseek/deepseek-flash"
+
+[profiles."openclaw.deepseek_4_1_flash".openclaw.models.providers.deepseek]
+baseUrl = "https://api.deepseek.com"
+apiKey = "${DEEPSEEK_API_KEY}"
+api = "openai-completions"
+
+[[profiles."openclaw.deepseek_4_1_flash".openclaw.models.providers.deepseek.models]]
+id = "deepseek-flash"
+name = "DeepSeek V4.1 Flash"
+api = "openai-completions"
+reasoning = false
+input = ["text"]
+contextWindow = 1000000
+maxTokens = 8192
+
+[profiles."openclaw.glm_5_2"]
+agent = "openclaw"
+image = "dynacomsec:openclaw"
+model = "zhipu/glm-5.2"
+session_mode = "native"
+
+[profiles."openclaw.glm_5_2".env]
+OPENAI_API_KEY = "${ZHIPU_API_KEY}"
+OPENAI_BASE_URL = "https://open.bigmodel.cn/api/paas/v4/"
+
+[profiles."openclaw.glm_5_2".openclaw.models]
+default = "zhipu/glm-5.2"
+
+[profiles."openclaw.glm_5_2".openclaw.models.providers.zhipu]
+baseUrl = "https://open.bigmodel.cn/api/paas/v4/"
+apiKey = "${ZHIPU_API_KEY}"
+api = "openai-completions"
+
+[[profiles."openclaw.glm_5_2".openclaw.models.providers.zhipu.models]]
+id = "glm-5.2"
+name = "GLM 5.2"
+api = "openai-completions"
+reasoning = true
+input = ["text"]
+contextWindow = 1000000
+maxTokens = 8192
+
+[profiles."openclaw.qwen_3_8_max"]
+agent = "openclaw"
+image = "dynacomsec:openclaw"
+model = "qwen/qwen3.8-max"
+session_mode = "native"
+
+[profiles."openclaw.qwen_3_8_max".env]
+OPENAI_API_KEY = "${DASHSCOPE_API_KEY}"
+OPENAI_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+
+[profiles."openclaw.qwen_3_8_max".openclaw.models]
+default = "qwen/qwen3.8-max"
+
+[profiles."openclaw.qwen_3_8_max".openclaw.models.providers.qwen]
+baseUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+apiKey = "${DASHSCOPE_API_KEY}"
+api = "openai-completions"
+
+[[profiles."openclaw.qwen_3_8_max".openclaw.models.providers.qwen.models]]
+id = "qwen3.8-max"
+name = "Qwen 3.8 Max"
+api = "openai-completions"
+reasoning = true
+input = ["text"]
+contextWindow = 1000000
+maxTokens = 8192
+
+[profiles."openclaw.minimax_m2_5"]
+agent = "openclaw"
+image = "dynacomsec:openclaw"
+model = "minimax/MiniMax-M2.5"
+session_mode = "native"
+
+[profiles."openclaw.minimax_m2_5".env]
+OPENAI_API_KEY = "${MINIMAX_API_KEY}"
+OPENAI_BASE_URL = "https://api.minimax.io/v1"
+
+[profiles."openclaw.minimax_m2_5".openclaw.models]
+default = "minimax/MiniMax-M2.5"
+
+[profiles."openclaw.minimax_m2_5".openclaw.models.providers.minimax]
+baseUrl = "https://api.minimax.io/v1"
+apiKey = "${MINIMAX_API_KEY}"
+api = "openai-completions"
+
+[[profiles."openclaw.minimax_m2_5".openclaw.models.providers.minimax.models]]
+id = "MiniMax-M2.5"
+name = "MiniMax M2.5"
+api = "openai-completions"
+reasoning = true
+input = ["text"]
+contextWindow = 204800
+maxTokens = 8192
+
+# Hermes
+
+[profiles."hermes.gemini_3_5_flash"]
+agent = "hermes"
+image = "dynacomsec:hermes"
+model = "gemini-3.5-flash"
+session_mode = "native"
+hermes_api_mode = "chat_completions"
+
+[profiles."hermes.gemini_3_5_flash".env]
+OPENAI_API_KEY = "${GEMINI_API_KEY}"
+OPENAI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
+[profiles."hermes.gemini_3_1_pro"]
+extends = "hermes.gemini_3_5_flash"
+model = "gemini-3.1-pro-preview"
+
+[profiles."hermes.deepseek_4_1_flash"]
+agent = "hermes"
+image = "dynacomsec:hermes"
+model = "deepseek-flash"
+session_mode = "native"
+hermes_api_mode = "chat_completions"
+
+[profiles."hermes.deepseek_4_1_flash".env]
+OPENAI_API_KEY = "${DEEPSEEK_API_KEY}"
+OPENAI_BASE_URL = "https://api.deepseek.com"
+
+[profiles."hermes.gpt_5_6_sol"]
+agent = "hermes"
+image = "dynacomsec:hermes"
+model = "gpt-5.6-sol"
+session_mode = "native"
+hermes_api_mode = "responses"
+hermes_streaming = true
+
+[profiles."hermes.gpt_5_6_sol".env]
+OPENAI_API_KEY = "${OPENAI_API_KEY}"
+OPENAI_BASE_URL = "https://api.openai.com/v1"
+
+[profiles."hermes.glm_5_2"]
+agent = "hermes"
+image = "dynacomsec:hermes"
+model = "glm-5.2"
+session_mode = "native"
+hermes_api_mode = "chat_completions"
+
+[profiles."hermes.glm_5_2".env]
+OPENAI_API_KEY = "${ZHIPU_API_KEY}"
+OPENAI_BASE_URL = "https://open.bigmodel.cn/api/paas/v4/"
+
+[profiles."hermes.qwen_3_8_max"]
+agent = "hermes"
+image = "dynacomsec:hermes"
+model = "qwen3.8-max"
+session_mode = "native"
+hermes_api_mode = "chat_completions"
+
+[profiles."hermes.qwen_3_8_max".env]
+OPENAI_API_KEY = "${DASHSCOPE_API_KEY}"
+OPENAI_BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+
+# Codex
+
+[profiles."codex.gpt_5_6_sol"]
+agent = "codex"
+image = "dynacomsec:codex"
+model = "gpt-5.6-sol"
+session_mode = "native"
+codex_provider = "openai"
+codex_wire_api = "responses"
+
+[profiles."codex.gpt_5_6_sol".env]
+OPENAI_API_KEY = "${OPENAI_API_KEY}"
+OPENAI_BASE_URL = "https://api.openai.com/v1"
